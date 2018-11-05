@@ -39,15 +39,17 @@ export class ICU{
     AdultICUBeds: number;
     PedICUBeds: number;
     invasiveVentrilationBeds: number;
+    staff: Person[];
 }
 export class Person{
+    PersonID: number;
     doNotContact: Boolean;
     emailVerificationStatus: string;//bounced, None, Valid, Verified, Verified_RC2017
     prefix: string; //dr, mr, mrs, ms
     firstName: string;
     lastName: string;
     middleName: string;
-    roles:[Role];
+    roles:Role[];
     university: string;
     CCM_Cert: boolean;
     pediatric: boolean;
@@ -56,19 +58,19 @@ export class Person{
     city: string;
     province: string;
     country:string;
-    postal: string;
+    postal_code: string;
     email:string;
     email2: string;
     admin: Person;
-    phone1: number;
-    phone2: number;
+    phone1: string;
+    phone2: string;
     DateCreated: Date;
     permissionCCCTG: boolean;
     permissionCBS: boolean;
     permissionCCCS: boolean;
     membershipType: string; //Active, ActiveMember, Affiliate, Affiliate Member, Associate Member, Intensive Affiliate Member, Non Intensive Associate Member
     notes: string;
-    specialties: [string]
+    specialties: string[];
 }
 export class Role{
     personID: number;
