@@ -71,9 +71,15 @@ export class Person{
     membershipType: string; //Active, ActiveMember, Affiliate, Affiliate Member, Associate Member, Intensive Affiliate Member, Non Intensive Associate Member
     notes: string;
     specialties: string[];
+    localVerification: boolean = false;
 }
 export class Role{
     personID: number;
     role: string;
     ICUID: number;
+}
+export class Revision{
+    dateCreated: Date;
+    newVersion: Person;
+    oldVersion: Person;
 }
