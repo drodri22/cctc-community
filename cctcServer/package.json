@@ -1,0 +1,19 @@
+{
+  "name": "cctcserver",
+  "version": "1.0.0",
+  "description": "backend for cctc community platform",
+  "main": "app.js",
+  "dependencies": {
+    "@google/maps": "^0.5.5",
+    "express": "^4.16.4",
+    "mysql": "^2.16.0",
+    "npm": "^6.9.0",
+    "request": "^2.88.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Daniel Rodriguez",
+  "license": "ISC"
+}

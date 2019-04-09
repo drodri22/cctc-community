@@ -1,0 +1,3 @@
+SELECT pers.*, roles FROM (SELECT p.* FROM critcaremaster.Person p INNER JOIN (SELECT * FROM critcaremaster.Role WHERE ICUID = 357) r ON p.PersonID = r.PersonID GROUP BY p.PersonID) pers
+LEFT JOIN (SELECT PersonID, JSON_ARRAYAGG(JSON_OBJECT('RoleID', RoleID, 'PersonID', PersonID,'ICUID', ICUID,'role', role,'HospID', HospID,'Description', Description)) roles FROM critcaremaster.Role GROUP BY PersonID) rol 
+ON pers.PersonID = rol.PersonID;

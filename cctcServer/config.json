@@ -1,0 +1,6 @@
+{
+    "db_host": "criticalcaredb.cier1yfw1pcl.us-east-2.rds.amazonaws.com",
+    "db_user": "critcaremaster",
+    "db_password": "62MUhfKX3ybLfFW",
+    "database": "critcaremaster"
+}
