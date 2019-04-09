@@ -2,19 +2,17 @@ export class Hospital{
     HopsitalID: number;
     name: string;
     phone_number: string;
-    switchboard: number;
     address: string;
     pictureRef: string;
     lat: number;
-    long: number;
-    icus: ICU[];
+    lng: number;
+    ICUs: ICU[];
     instNum: number;
     hospCode: number;
-    hospCIHIcode: number;
+    hospCIHIcode: string;
     province: string;
     municipality: string;
     regionName: string;
-    institutionName: string;
     siteName: string;
     peerGroupCIHI: string;
     contact: Person;
@@ -23,12 +21,15 @@ export class Hospital{
     city: string;
     country: string;
     postalCode: string;
+    switchboard: string;
+    comments:string;
 }
 export class ICU{
     ICUID: number;
     name: string;
     urlIdentifier: string;
     phone_number: string;
+    switchboard: string;
     HospitalID: number;
     siteName: string;
     ICUType: string;
@@ -40,6 +41,10 @@ export class ICU{
     PedICUBeds: number;
     invasiveVentrilationBeds: number;
     staff: Person[];
+    peerGroupCIHI: string;
+    INSTNUM: number;
+    HospCode: number;
+    HospCIHIcode: string; 
 }
 export class Person{
     PersonID: number;
@@ -74,12 +79,15 @@ export class Person{
     localVerification: boolean = false;
 }
 export class Role{
-    personID: number;
+    RoleID: number;
+    PersonID: number;
     role: string;
     ICUID: number;
 }
 export class Revision{
+    RevisionID: number;
     dateCreated: Date;
     newVersion: Person;
     oldVersion: Person;
+    reviewed: boolean;
 }
