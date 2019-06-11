@@ -77,6 +77,8 @@ export class Person{
     notes: string;
     specialties: string[];
     localVerification: boolean = false;
+    rolesToAdd: Role [];//for revision
+    rolesToRemove: Role [];//for revision
 }
 export class Role{
     RoleID: number;
@@ -90,4 +92,5 @@ export class Revision{
     newVersion: Person;
     oldVersion: Person;
     reviewed: boolean;
+    
 }
