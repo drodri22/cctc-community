@@ -7,20 +7,58 @@ var connection = require('../connection');//will opening multiple of these cause
 const myrequest = require('request');
 
 router.route('/')
-    .post(parseUrlencoded, parseJSON, function (request, response) {//import with branch id, authorization and sub. if can find a second menu, with just branch id, then just add stuff not new menu
-
+    .post(parseUrlencoded, parseJSON, function (request, response) {
+        var icu=request.body.ICUName.toLowerCase();
+        var hosp = request.body.hospitalName.toLowerCase();
+        var sql = "SELECT ICU.* FROM ICU";
+        if(hosp!='') {
+            sql += " INNER JOIN Hospital ON ICU.HospitalID = Hospital.HospitalID WHERE LOWER(Hospital.name) LIKE '%"+hosp+"%'";
+            if(icu!='')
+            {
+                sql+=" AND LOWER(ICU.name) LIKE '%"+icu+"%'"
+            }
+        }
+        else {
+            sql+=" WHERE LOWER(ICU.name) LIKE '%"+icu+"%'";
+        }
+        console.log(sql);
+        connection.acquire(function (err1, con) {
+            if (err1 != null) {
+                response.send([]);
+                return;
+            }
+            con.query(sql, [], function (err, rows, fields) {
+                if (err != null) {
+                    response.send([]);
+                    con.release();
+                    return;
+                }
+                response.send(rows);
+                con.release();
+            });
+        });
+        
+        
     })
 
     .get(parseUrlencoded, parseJSON, function (request, response) {
-        connection.acquire(function (err, con) {
+        connection.acquire(function (err1, con) {
+            if (err1 != null) {
+                response.send({error:err1});
+                return;
+            }
             con.query('SELECT * FROM ICU', [], function (err, rows, fields) {
-
+                if (err != null) {
+                    response.send({error:err});
+                    con.release();
+                    return;
+                }
                 response.send(rows);
                 con.release();
             });
         });
     })
-    .put(parseUrlencoded, parseJSON, function (request, response) {
+    .put(parseUrlencoded, parseJSON, function (request, response) {//get the icu info based on url identifier
         connection.acquire(function (err, con) {
             con.query('SELECT * FROM ICU WHERE urlIdentifier = ?', [request.body.urlIdentifier], function (err, rows, fields) {
                 if (err != null && !response.headersSent) { response.send({ error: err }); con.release(); return; };
@@ -30,12 +68,11 @@ router.route('/')
                     "(SELECT PersonID, JSON_ARRAYAGG(JSON_OBJECT('RoleID', RoleID, 'PersonID', PersonID,'ICUID', ICUID,'role', role,'HospID', HospID,'Description', Description)) roles " +
                     "FROM critcaremaster.Role GROUP BY PersonID) rol ON pers.PersonID = rol.PersonID;", [rows[0].ICUID], function (err2, staff, fields) {
                         if (err2 != null && !response.headersSent) { response.send({ error: err2 }); con.release(); return; };
-                        for(let pers of staff)
-                        {
-                            pers.roles=JSON.parse(pers.roles);
-                            pers.specialties=JSON.parse(pers.specialties);
+                        for (let pers of staff) {
+                            pers.roles = JSON.parse(pers.roles);
+                            pers.specialties = JSON.parse(pers.specialties);
                         }
-                        rows[0].staff=staff;
+                        rows[0].staff = staff;
                         response.send(rows[0]);
                         con.release();
                     });
