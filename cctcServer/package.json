@@ -5,7 +5,7 @@
   "main": "app.js",
   "dependencies": {
     "@google/maps": "^0.5.5",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "express-jwt": "^5.3.1",
     "express-jwt-authz": "^2.3.1",
     "jwks-rsa": "^1.6.0",
